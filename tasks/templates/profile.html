@@ -1,0 +1,30 @@
+<!-- Este template extiende de 'base.html', que proporciona el diseño general de la página -->
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Inicio del bloque de contenido para la página de perfil -->
+<div class="container mt-5">
+    <!-- Mostrando el nombre de usuario del perfil del usuario -->
+    <h1>Tu Perfil: {{ user.username }}</h1>
+
+    <!-- Componente de tarjeta para mostrar la foto de perfil -->
+    <div class="card">
+        <div class="card-body">
+            <!-- Título para la sección de foto de perfil -->
+            <h5 class="card-title">Foto de Perfil</h5>
+            <!-- Verificar si el usuario tiene una foto de perfil -->
+            {% if user.profile.profile_picture %}
+                <!-- Si existe una foto de perfil, mostrarla -->
+                <img src="{{ user.profile.profile_picture.url }}" alt="Foto de Perfil" class="rounded-circle" width="150" height="150">
+            {% else %}
+                <!-- Si no existe una foto de perfil, mostrar un icono de marcador de posición -->
+                <i class="fas fa-user-circle" style="font-size: 150px;"></i>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Enlace para editar el perfil del usuario -->
+    <a href="{% url 'edit_profile' %}" class="btn btn-primary mt-3">Editar Perfil</a>
+</div>
+<!-- Fin del bloque de contenido -->
+{% endblock %}

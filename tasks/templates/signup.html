@@ -1,0 +1,70 @@
+{% extends 'base.html' %}  <!-- Extiende la plantilla base para reutilizar el diseño general -->
+
+{% block content %}
+<main class="container">  <!-- Contenedor principal para el contenido -->
+    <div class="row">  <!-- Fila para organizar los elementos en columnas -->
+        <div class="col-md-4 offset-md-4">  <!-- Columna centrada en la pantalla -->
+            <!-- 
+            Formulario para el registro de nuevos usuarios.
+            El método POST se utiliza para enviar datos de forma segura.
+            -->
+            <form action="/signup/" method="POST" class="card card-body mt-5 shadow">  <!-- Formulario de registro -->
+                <div class="d-flex justify-content-between">  <!-- Flexbox para alinear título e imagen -->
+                    <h1 class="text-center">Signup</h1>  <!-- Título del formulario -->
+                    <img src="/media/logo/image-removebg-preview.png" alt="Imagen de registro" class="img-fluid" style="max-width: 100px;">  <!-- Logo de la aplicación -->
+                </div>
+
+                <!-- Si hay errores, se muestran todos en un solo bloque. -->
+                {% if errors %}  <!-- Verifica si hay errores para mostrar -->
+                    <div class="alert alert-danger" role="alert">  <!-- Alert box para mostrar errores -->
+                        <strong>Error:</strong>  <!-- Encabezado para errores -->
+                        <ul>  <!-- Lista de errores -->
+                            {% for error in errors %}  <!-- Itera sobre cada error -->
+                                <li>{{ error }}</li>  <!-- Muestra cada error como un elemento de lista -->
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                
+                <!-- Token CSRF para proteger el formulario contra ataques CSRF. -->
+                {% csrf_token %}  <!-- Inserta un token CSRF para la seguridad del formulario -->
+                
+                <div class="mb-3 mt-4">  <!-- Margen inferior y margen superior para el campo de usuario -->
+                    <label for="username">Username:</label>  <!-- Etiqueta para el campo de nombre de usuario -->
+                    <input type="text" name="username" id="username" class="form-control {% if 'El nombre de usuario ya existe.' in errors %}is-invalid{% endif %}"  
+                        placeholder="Escribe tu nombre de usuario" value="{{ form_data.username }}">  <!-- Placeholder y valor previo -->
+                </div>
+
+                <!-- Campo adicional para correo electrónico -->
+                <div class="mb-3 mt-1">  <!-- Margen inferior y margen superior para el campo de email -->
+                    <label for="email">Email:</label>  <!-- Etiqueta para el campo de correo electrónico -->
+                    <input type="email" name="email" id="email" class="form-control {% if 'El correo electrónico ya está registrado.' in errors %}is-invalid{% endif %}"  
+                        placeholder="Escribe tu correo electrónico" value="{{ form_data.email }}">  <!-- Placeholder y valor previo -->
+                </div>
+
+                <div class="mb-3 mt-1">  <!-- Margen inferior y margen superior para el campo de contraseña -->
+                    <label for="password1">Password:</label>  <!-- Etiqueta para el campo de contraseña -->
+                    <input type="password" name="password1" id="password1" class="form-control {% if 'La contraseña debe tener al menos 8 caracteres.' in errors or 'La contraseña no puede contener espacios.' in errors or 'Las contraseñas no coinciden.' in errors %}is-invalid{% endif %}" 
+                        placeholder="Escribe tu contraseña" value="{{ form_data.password1 }}">  <!-- Placeholder y valor previo -->
+                </div>
+
+                <div class="mb-3 mt-1">  <!-- Margen inferior y margen superior para el campo de confirmación de contraseña -->
+                    <label for="password2">Confirm your password:</label>  <!-- Etiqueta para el campo de confirmación de contraseña -->
+                    <input type="password" name="password2" id="password2" class="form-control {% if 'Las contraseñas no coinciden.' in errors %}is-invalid{% endif %}"  
+                        placeholder="Confirma tu contraseña" value="{{ form_data.password2 }}">  <!-- Placeholder y valor previo -->
+                </div>
+
+                <button class="btn text-white" style="background-color: #212529;">  <!-- Botón de envío del formulario con estilo -->
+                    Signup  <!-- Texto del botón -->
+                </button>
+            </form>  <!-- Fin del formulario -->
+        </div>
+    </div>
+</main>
+
+<style>
+    body {
+        background-color: #e0e0e0 !important;  /* Fondo gris para la página de signup */
+    }
+</style>
+{% endblock %}  <!-- Fin del bloque de contenido -->

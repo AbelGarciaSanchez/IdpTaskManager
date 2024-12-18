@@ -1,0 +1,26 @@
+{% extends 'base.html' %}  <!-- Hereda la estructura y estilos del archivo base.html -->
+
+{% block content %}  <!-- Inicio del bloque de contenido que se renderizará en la plantilla base -->
+<main class="container">  <!-- Contenedor principal para el contenido, usa Bootstrap para el estilo -->
+    <div class="row">  <!-- Fila de Bootstrap para organizar el diseño -->
+        <div class="col-md-6 offset-md-3 mt-5">  <!-- Columna que centra la tarjeta en la página -->
+            <div class="card shadow-lg">  <!-- Componente de tarjeta de Bootstrap con efecto de sombra -->
+               
+                <div class="card-header bg-dark text-white text-center">  <!-- Encabezado de la tarjeta con fondo oscuro y texto blanco -->
+                    <h3>Create Task</h3>  <!-- Título de la tarjeta -->
+                </div>
+                <div class="card-body">  <!-- Cuerpo de la tarjeta donde se encuentra el formulario -->
+                    <form action="/tasks/create/" method="POST" enctype="multipart/form-data">  <!-- Formulario para crear una tarea, se usa el método POST -->
+                        {% csrf_token %}  <!-- Token CSRF de Django para seguridad -->
+                        {{ form.as_p }}  <!-- Renderiza los campos del formulario como párrafos -->
+                        
+                        <div class="d-grid gap-2">  <!-- Clase de utilidad de Bootstrap para el espaciado -->
+                            <button class="btn btn-success btn-lg" type="submit">Save Task</button>  <!-- Botón de envío para guardar la tarea -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}  <!-- Fin del bloque de contenido -->

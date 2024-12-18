@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <!-- Tarjeta que contiene la información de la tarea -->
+            <div class="card shadow-lg">
+                <!-- Encabezado con un diseño llamativo -->
+                <div class="card-header bg-primary text-white text-center py-3">
+                    <!-- Título de la tarea -->
+                    <h3 class="mb-0">{{ task.title }}</h3>
+                </div>
+                <!-- Imagen de la tarea -->
+                <div class="text-center p-3">
+                    {% if task.image %}
+                        <!-- Muestra la imagen si está disponible -->
+                        <img src="{{ task.image.url }}" alt="Task Image" class="img-fluid rounded" 
+                            style="max-height: 300px; border: 1px solid #ddd;">
+                    {% else %}
+                        <!-- Mensaje si no hay imagen disponible -->
+                        <p class="text-muted">No image available</p>
+                    {% endif %}
+                </div>
+                <!-- Formulario de actualización de la tarea -->
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data">
+                        <!-- Token CSRF para protección contra ataques -->
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <!-- Renderiza el formulario de manera legible -->
+                            {{ form.as_p }}
+                        </div>
+                        <div class="d-grid">
+                            <!-- Botón para enviar la actualización, solo habilitado si la tarea no está completada -->
+                            {% if not task.datecompleted %}
+                                <button class="btn btn-primary btn-block" type="submit">Update</button>
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+                <!-- Botones de acción para completar o eliminar la tarea -->
+                <div class="card-footer d-flex justify-content-between align-items-center">
+                    <!-- Mostrar solo si la tarea no está completada -->
+                    {% if not task.datecompleted %}
+                    <form action="{% url 'complete_task' task.id %}" method="POST" class="w-45">
+                        <!-- Token CSRF para protección -->
+                        {% csrf_token %}
+                        <!-- Botón para marcar la tarea como completada -->
+                        <button class="btn btn-success btn-lg w-100" type="submit">
+                            <i class="fa fa-check"></i> Complete
+                        </button>
+                    </form>
+                    {% endif %}
+                    <!-- Formulario para eliminar la tarea -->
+                    <form action="{% url 'delete_task' task.id %}" method="POST" class="w-45">
+                        <!-- Token CSRF para protección -->
+                        {% csrf_token %}
+                        <!-- Botón para eliminar la tarea -->
+                        <button class="btn btn-danger btn-lg w-100" type="submit">
+                            <i class="fa fa-trash"></i> Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

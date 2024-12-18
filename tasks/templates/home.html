@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main class="container-fluid p-5"> <!-- Contenedor principal con mayor espacio -->
+    <section class="card card-body shadow-lg rounded"> <!-- Se añade sombra y bordes redondeados para un diseño moderno -->
+        <!-- Sección de bienvenida con un título atractivo -->
+        <div class="text-center">
+            <div class="d-flex justify-content-center">
+                <h1 class="display-4 font-weight-bold text-dark mb-4 me-4">Welcome to Task Manager!</h1>
+                <img src="/media/logo/image-removebg-previewB2.png" alt="Task Manager Logo" class="ms-4 mt-3" style="width: 115px; height:70px">
+            </div>
+
+            <p class="lead text-muted">
+                We are excited to help you stay organized and on top of your tasks. Whether you're working on personal projects or managing team goals, our platform provides the tools you need to prioritize, track, and complete your tasks efficiently. From setting deadlines to collaborating with teammates, we offer a seamless experience that keeps you focused and motivated. Stay on top of your goals with real-time updates, intuitive task management, and progress tracking.
+            </p>
+        </div>
+        
+        <!-- Botones para iniciar sesión o registrarse, visibles solo si el usuario no está autenticado -->
+        <div class="text-center mt-3">
+            {% if not user.is_authenticated %}
+                <a class="btn btn-dark btn-lg px-4 py-2 me-2" href="{% url 'signin' %}">Signin</a> <!-- Botón de inicio de sesión -->
+                <a class="btn btn-secondary btn-lg px-4 py-2" href="{% url 'signup' %}">Signup</a> <!-- Botón de registro -->
+            {% endif %}
+        </div>
+    </section>
+</main>
+
+{% endblock %}
+
+<style>
+/* Estilo adicional para mejorar la apariencia de los botones */
+.btn-lg {
+    font-size: 1.25rem; /* Aumenta el tamaño del texto en los botones */
+    padding: 10px 30px; /* Aumenta el tamaño de los botones */
+}
+
+/* Estilo para la tarjeta que contiene el contenido */
+.card-body {
+    background-color: #f8f9fa; /* Fondo suave */
+    border-radius: 10px; /* Bordes redondeados */
+}
+
+/* Efecto hover para los botones */
+.btn:hover {
+    opacity: 0.9; /* Efecto suave al pasar el cursor sobre los botones */
+}
+
+/* Título de la página */
+h1.display-4 {
+    font-weight: 700; /* Título en negrita */
+}
+
+/* Estilo para los botones */
+.btn-primary {
+    background-color: #007bff; /* Color azul para el botón Signin */
+    border-color: #007bff;
+}
+
+.btn-success {
+    background-color: #28a745; /* Color verde para el botón Signup */
+    border-color: #28a745;
+}
+
+/* Para que el texto sea más atractivo */
+.lead {
+    font-size: 1.25rem; /* Aumenta el tamaño del texto */
+    line-height: 1.6; /* Aumenta el espaciado entre las líneas */
+}
+</style>
